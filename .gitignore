@@ -1,0 +1,7 @@
+# Ignorar el archivo de entorno que contiene los secretos reales.
+.env
+
+# Ignorar cualquier directorio de datos local que pudiera crearse.
+# Los volúmenes nombrados se guardan en un área de Docker, pero
+# esta es una buena práctica por si se cambia a un bind mount.
+/data/

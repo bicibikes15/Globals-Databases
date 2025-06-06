@@ -1,0 +1,80 @@
+# ##################################################
+# #                                                #
+# #        STACK GLOBAL DE BASES DE DATOS          #
+# #         https://digitallfran.co                #
+# #                                                #
+# ##################################################
+
+services:
+  postgres_global:
+    ## -----------------https://digitallfran.co--------------------- ##
+    # --- PostgreSQL para Aplicaciones ---
+    image: postgres:15-alpine
+    container_name: postgres_global
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_global_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - digitallfran_net
+
+  pgvector_global:
+    ## -----------------https://digitallfran.co--------------------- ##
+    # --- PGVector para Proyectos (IA, Búsqueda Semántica) ---
+    image: pgvector/pgvector:pg16
+    container_name: pgvector_global
+    restart: always
+    environment:
+      POSTGRES_DB: ${PGVECTOR_DB}
+      POSTGRES_USER: ${PGVECTOR_USER}
+      POSTGRES_PASSWORD: ${PGVECTOR_PASSWORD}
+    volumes:
+      - pgvector_global_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - digitallfran_net
+
+  redis_global:
+    ## -----------------https://digitallfran.co--------------------- ##
+    # --- Servicio de Redis Global (Caché, Colas Rápidas) ---
+    image: redis:7.2-alpine
+    container_name: redis_global
+    restart: always
+    volumes:
+      - redis_global_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - digitallfran_net
+
+  mongodb_global:
+    ## -----------------https://digitallfran.co--------------------- ##
+    # --- Servicio de MongoDB Global (NoSQL, Datos Flexibles) ---
+    image: mongo:7.0
+    container_name: mongodb_global
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongodb_global_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - digitallfran_net
+
+volumes:
+  postgres_global_data: {}
+  pgvector_global_data: {}
+  redis_global_data: {}
+  mongodb_global_data: {}
+
+networks:
+  digitallfran_net:
+    external: true
