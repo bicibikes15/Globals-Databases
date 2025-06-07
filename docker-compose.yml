@@ -6,71 +6,86 @@
 # ##################################################
 
 services:
-  postgres_global:
+  postgres:
     ## -----------------https://digitallfran.co--------------------- ##
     image: postgres:15-alpine
-    container_name: postgres_global
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - postgres_global_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
       - digitallfran_net
 
-  pgvector_global:
+  pgvector:
     ## -----------------https://digitallfran.co--------------------- ##
     image: pgvector/pgvector:pg16
-    container_name: pgvector_global
+    container_name: pgvector
     restart: always
     environment:
       POSTGRES_DB: ${PGVECTOR_DB}
       POSTGRES_USER: ${PGVECTOR_USER}
       POSTGRES_PASSWORD: ${PGVECTOR_PASSWORD}
     volumes:
-      - pgvector_global_data:/var/lib/postgresql/data
+      - pgvector_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     networks:
       - digitallfran_net
 
-  redis_global:
+  redis:
     ## -----------------https://digitallfran.co--------------------- ##
     image: redis:7.2-alpine
-    container_name: redis_global
+    container_name: redis
     restart: always
-    command: redis-server --requirepass ${REDIS_PASSWORD} # <-- LÍNEA AÑADIDA/ACTUALIZADA
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
-      - redis_global_data:/data
+      - redis_data:/data
     ports:
       - "6379:6379"
     networks:
       - digitallfran_net
 
-  mongodb_global:
+  mongodb:
     ## -----------------https://digitallfran.co--------------------- ##
     image: mongo:7.0
-    container_name: mongodb_global
+    container_name: mongodb
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
-      - mongodb_global_data:/data/db
+      - mongodb_data:/data/db
     ports:
       - "27017:27017"
     networks:
       - digitallfran_net
 
+  mariadb:
+    ## -----------------https://digitallfran.co--------------------- ##
+    image: mariadb:11.3
+    container_name: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - digitallfran_net
+
 volumes:
-  postgres_global_data: {}
-  pgvector_global_data: {}
-  redis_global_data: {}
-  mongodb_global_data: {}
+  postgres_data: {}
+  pgvector_data: {}
+  redis_data: {}
+  mongodb_data: {}
+  mariadb_data: {}
 
 networks:
   digitallfran_net:

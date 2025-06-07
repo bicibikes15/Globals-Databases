@@ -32,6 +32,8 @@ Para una gestión visual de todos tus contenedores, puedes usar [**el stack de P
     * **Uso:** Ideal para datos que no tienen una estructura fija, como perfiles de usuario complejos, logs, o APIs modernas (como `Evolution API`).
     * **Puerto:** `27017`
 
+-   **MariaDB:** Base de datos relacional (compatible con MySQL). Contenedor Ideal para Wordpress, Laravel: `mariadb`. Puerto: `3306`.
+
 ## Instalación
 
 **1. Clonar el Repositorio**
