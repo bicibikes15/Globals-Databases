@@ -1,68 +1,76 @@
-# Stack Global de Bases de Datos by DigitAllFran
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/database/database-original.png" alt="Databases Logo" width="120"/>
+  <h1 align="center">Stack Global de Bases de Datos by DigitAllFran</h1>
+  <p>
+    <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+    <img src="https://img.shields.io/badge/PGVector-0099cc?style=for-the-badge" alt="PGVector"/>
+    <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis"/>
+    <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+    <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB"/>
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+  </p>
+</div>
 
-Este stack despliega un conjunto de bases de datos de alto rendimiento, diseñadas para servir como la **fundación centralizada** para múltiples aplicaciones y microservicios.
+> [!NOTE]
+> **Arsenal de datos centralizado**  
+> Un stack de bases de datos de alto rendimiento, diseñado para servir como la fundación única y segura de tu ecosistema DigitAllFran.
 
-## Arquitectura y Estrategia
+> [!TIP]
+> **Arquitectura y estrategia**
+> - Todas las bases de datos expuestas internamente en la red `digitallfran_net`
+> - Integración directa con [Traefik](https://github.com/bicibikes15/Traefik) y cualquier stack de DigitAllFran
+> - Gestión visual opcional con [Portainer](https://github.com/bicibikes15/Portainer-Stack-Traefik)
 
-Este no es un simple conjunto de bases de datos; es el **arsenal de datos de tu ecosistema**. La estrategia es tener una única fuente de verdad para tus datos, accesible de forma segura y eficiente por tus otras aplicaciones (n8n, Chatwoot, etc.).
+> [!IMPORTANT]
+> **Guerreros incluidos en este arsenal**
+> - **PostgreSQL (`postgres_global`)**: El General. Puerto: `5432`
+> - **PGVector (`pgvector_global`)**: El Rastreador IA. Puerto: `5433`
+> - **Redis (`redis_global`)**: El Mensajero Veloz. Puerto: `6379`
+> - **MongoDB (`mongodb_global`)**: El Cambiante. Puerto: `27017`
+> - **MariaDB (`mariadb_global`)**: El Clásico para WordPress/Laravel. Puerto: `3306`
 
-#### **Dependencia de Traefik (Indispensable para el Ecosistema)**
+> [!IMPORTANT]
+> **Instalación**
+> 1. **Clona el repositorio:**
+>    ```
+>    git clone https://github.com/bicibikes15/Globals-Databases.git
+>    cd Globals-Databases
+>    ```
+> 2. **Crea la red externa compartida (si no existe):**
+>    ```
+>    docker network create digitallfran_net
+>    ```
+> 3. **Configura los secretos:**
+>    ```
+>    cp .env.example .env
+>    # Edita .env y pon tus contraseñas seguras.
+>    ```
+> 4. **Despliega el arsenal:**
+>    ```
+>    docker compose up -d
+>    ```
+> 5. **Verifica que todo esté corriendo:**
+>    ```
+>    docker ps
+>    # Deberías ver todos los contenedores y puertos listos para tus apps.
+>    ```
 
-Si bien este stack puede funcionar solo, está diseñado para operar en conjunto con [**el stack de Traefik de DigitAllFran**](https://github.com/bicibikes15/Traefik). Al compartir la misma red (`digitallfran_net`), tus aplicaciones, que son expuestas al mundo a través de Traefik, pueden comunicarse con estas bases de datos de forma interna y segura, usando simplemente el nombre del contenedor (ej. `postgres_global`) como la dirección del host. Esta es la forma profesional y recomendada de estructurar tus servicios.
+> [!WARNING]
+> **¿Conectando apps?**  
+> Usa el nombre del contenedor como host (ej. `postgres_global`, `redis_global`, etc.) en tus aplicaciones conectadas a la misma red.
 
-#### **Gestión con Portainer (Opcional)**
+> [!NOTE]
+> **¿Todo funcionando?**  
+> Si puedes conectar tus apps y acceder a las bases de datos, ¡tienes tu arsenal centralizado listo para microservicios, bots y automatización!
 
-Para una gestión visual de todos tus contenedores, puedes usar [**el stack de Portainer de DigitAllFran**](https://github.com/bicibikes15/Portainer-Stack-Traefik). No es necesario para que las bases de datos funcionen, pero facilita enormemente la administración.
+---
 
-## Guerreros Incluidos en este Arsenal
-
--   **PostgreSQL (`postgres_global`):** El "General". Una base de datos relacional (SQL) robusta y versátil.
-    * **Uso:** Ideal para la mayoría de tus aplicaciones que requieren datos estructurados y consistentes (ej. `n8n`, `Chatwoot`).
-    * **Puerto:** `5432`
-
--   **PGVector (`pgvector_global`):** El "Rastreador". Una versión especializada de PostgreSQL para la era de la IA.
-    * **Uso:** Indispensable para proyectos que involucran inteligencia artificial, embeddings, y búsqueda por similitud o semántica.
-    * **Puerto:** `5433`
-
--   **Redis (`redis_global`):** El "Mensajero Veloz". Un almacén de datos en memoria ultrarrápido.
-    * **Uso:** Perfecto para `caching` (acelerar tus aplicaciones), gestionar colas de tareas (como en `n8n`) y sesiones de usuario.
-    * **Puerto:** `6379`
-
--   **MongoDB (`mongodb_global`):** El "Cambiante". Una base de datos NoSQL flexible.
-    * **Uso:** Ideal para datos que no tienen una estructura fija, como perfiles de usuario complejos, logs, o APIs modernas (como `Evolution API`).
-    * **Puerto:** `27017`
-
--   **MariaDB:** Base de datos relacional (compatible con MySQL). Contenedor Ideal para Wordpress, Laravel: `mariadb`. Puerto: `3306`.
-
-## Instalación
-
-**1. Clonar el Repositorio**
-```bash
-# Reemplaza 'tu-github' con tu nombre de usuario
-git clone [https://github.com/tu-github/Globals-Databases.git](https://github.com/tu-github/Globals-Databases.git)
-cd Globals-Databases
-
-2. Crear la Red Externa Compartida
-
-La red digitallfran_net debe existir para que este stack se comunique con Traefik y otras aplicaciones. El nombre estandarizado para todos los proyectos de DigitAllFran es digitallfran_net.
-
-Bash
-
-docker network create digitallfran_net
-3. Configurar los Secretos
-
-Copia la plantilla para crear tu archivo de secretos.
-
-Bash
-
-cp .env.example .env
-Abre el archivo .env (nano .env) y establece tus propias contraseñas seguras.
-
-4. Desplegar el Arsenal
-
-Bash
-
-docker compose up -d
-Verificación
-Ejecuta docker ps para ver los cuatro contenedores corriendo. Sus puertos estarán expuestos en el host, listos para recibir conexiones de tus otras aplicaciones en la misma red.
-
+<div align="center">
+  <a href="https://digitallfran.co" target="_blank">
+    <img src="https://digitallfran.co/logo.svg" alt="DigitAllFran Logo" width="90"/><br>
+    <b>¿Necesitas soporte, migraciones o una arquitectura de datos a la medida?</b><br>
+    <span style="font-size:1.1em;">
+      <strong>¡Visita <u>digitallfran.co</u> y agenda tu consulta!</strong>
+    </span>
+  </a>
+</div>
